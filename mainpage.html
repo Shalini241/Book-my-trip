@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src = "myjavascript.js"></script>
+<script>
+  $(document).ready(function() {
+    let time = document.getElementById("current-time");
+    setInterval(()=>{
+      let d = new Date();
+      time.innerHTML = d.toLocaleDateString('en-us') + " "+ d.toLocaleTimeString('en-us');
+    },1000)
+
+    var changedColor = localStorage.getItem("bgcolor");
+      var article = document.getElementsByTagName('article');
+      article[0].style.backgroundColor = changedColor;
+  });
+
+  document.addEventListener("DOMContentLoaded", function() {
+
+setNavHeight()
+
+window.addEventListener("load", setNavHeight);
+window.addEventListener("resize", setNavHeight);
+});
+</script>
+<html lang="en">
+<head>
+<title>Book My Flights</title>
+<link rel="stylesheet" href="mystyle.css">
+</head>
+<body>
+
+<header>
+  <h1>BookMyFlights.com</h1>
+</header>
+
+<ul>
+    <li><a href="mainpage.html" style="background-color: #111111; color:  white;">Home</a></li>
+    <li><a href="flights.html">Flights</a></li>
+    <li><a href="hotels.html">Hotels</a></li>
+    <li><a href="rentalcarsbook.html">Cars</a></li>
+    <li><a href="orderstatus.html">Order Status</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="specialoffer.html" >Special Offer</a></li>
+    <li><a href="mycart.html" >My Cart</a></li>
+    <p id = "current-time"></p>
+</ul>
+
+<section>
+  <nav>
+    <h4> New <em>offers</em> available</h4>
+    <ol>
+        <li>
+            10% Cashback on $200 min flight booking
+        </li>
+        <li> 15% discount on hotel room booking</li>
+        <li> Free Cab from airport to hotel room upto 20 miles</li>
+    </ol>
+  </nav>
+  
+  <article>
+    <label>Set background color</label>
+    <input type="color" id="colorPicker" onchange="getColorValue()" value="#C1C8E4">
+
+    
+    <h2>Welcome</h2>
+    <p>Plan your weekend getaway with BookMyFlights.com</p>
+    <img src="pic1.jpeg" 
+    alt="Amsterdam" width="250" height="150">
+    <img src="pic2.jpeg" 
+    alt="Miami" width="250" height="150">
+    <img src="pic3.jpeg" 
+    alt="Fredericksburg" width="250" height="150">
+    <img src="pic4.jpeg" 
+    alt="Canyon Lake" width="250" height="150"> 
+  </article>
+</section>
+
+<footer>
+  <p>Copyright <strong>2033  by UTD</strong>. All Rights Reserved.</p>
+  <p> Shalini Gautam (sxg220033)</p>
+</footer>
+<div >
+    <p class="myPara"> Terms and Conditions</p>
+    </div>
+
+</body>
+</html>
+

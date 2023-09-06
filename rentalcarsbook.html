@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src = "myjavascript.js"></script>
+<script>
+  $(document).ready(function() {
+    let time = document.getElementById("current-time");
+    setInterval(()=>{
+      let d = new Date();
+      time.innerHTML = d.toLocaleDateString('en-us') + " "+ d.toLocaleTimeString('en-us');
+    },1000)
+
+    var changedColor = localStorage.getItem("bgcolor");
+      var article = document.getElementsByTagName('article');
+      article[0].style.backgroundColor = changedColor;
+
+      var xmlString = `
+      <cars>
+      <car>
+        <city>Houston</city>
+        <checkindate>2023-07-16</checkindate>
+        <checkoutdate>2023-07-19</checkoutdate>
+        <price>$200</price>
+      </car>
+      <car>
+        <city>Dallas</city>
+        <checkindate>2023-07-06</checkindate>
+        <checkoutdate>2023-07-09</checkoutdate>
+        <price>$140</price>
+      </car>
+      <car>
+        <city>Austin</city>
+        <checkindate>2023-07-06</checkindate>
+        <checkoutdate>2023-07-09</checkoutdate>
+        <price>$140</price>
+      </car>
+      <car>
+        <city>San Antonio</city>
+        <checkindate>2023-07-06</checkindate>
+        <checkoutdate>2023-07-09</checkoutdate>
+        <price>$140</price>
+      </car>
+      <car>
+        <city>Dallas</city>
+        <checkindate>2023-07-06</checkindate>
+        <checkoutdate>2023-07-09</checkoutdate>
+        <price>$140</price>
+      </car>
+      <car>
+        <city>Corpus Christi</city>
+        <checkindate>2023-07-06</checkindate>
+        <checkoutdate>2023-07-09</checkoutdate>
+        <price>$140</price>
+      </car>
+      <car>
+        <city>Beaumont</city>
+        <checkindate>2023-07-06</checkindate>
+        <checkoutdate>2023-07-09</checkoutdate>
+        <price>$140</price>
+      </car>
+      <car>
+        <city>Amarillo</city>
+        <checkindate>2023-07-06</checkindate>
+        <checkoutdate>2023-07-09</checkoutdate>
+        <price>$140</price>
+      </car>
+      <car>
+        <city>Prairie Winds Resort</city>
+        <checkindate>2023-07-06</checkindate>
+        <checkoutdate>2023-07-09</checkoutdate>
+        <price>$140</price>
+      </car>
+      <car>
+        <city>Fredericksburg</city>
+        <checkindate>2023-07-06</checkindate>
+        <checkoutdate>2023-07-09</checkoutdate>
+        <price>$140</price>
+      </car>
+    </cars>
+  `;
+
+  // Parse XML string into DOM object
+  var parser = new DOMParser();
+  var xmlDoc = parser.parseFromString(xmlString, "text/xml");
+
+  // Get flight nodes from XML DOM
+  var cars = xmlDoc.getElementsByTagName("car");
+
+  // Loop through flight nodes and add them to the table
+  for (var i = 0; i < cars.length; i++) {
+    var car = cars[i];
+    var city = car.getElementsByTagName("city")[0].textContent;
+    var checkindate = car.getElementsByTagName("checkindate")[0].textContent;
+    var checkoutdate = car.getElementsByTagName("checkoutdate")[0].textContent;
+    var price = car.getElementsByTagName("price")[0].textContent;
+
+    var row = "<tr>";
+    row += "<td>" + city + "</td>";
+    row += "<td>" + checkindate + "</td>";
+    row += "<td>" + checkoutdate + "</td>";
+    row += "<td>" + price + "</td>";
+    row += '<td><input type="checkbox" class="carCheckbox"></td>';
+    row += "</tr>";
+
+    $("#carTable tbody").append(row);
+  }
+
+  $(".carCheckbox").on("change", function() {
+    var isChecked = $(this).is(":checked");
+
+    if (isChecked) {
+      $(this).closest("tr").css("opacity", "0.5");
+    } else {
+      $(this).closest("tr").css("opacity", "1");
+    }
+  });
+
+  $("#cartIcon").on("click", function() {
+    var selectedCars = [];
+
+    $(".carCheckbox:checked").each(function() {
+      var carRow = $(this).closest("tr");
+      var carInfo = {
+        city: carRow.find("td:eq(0)").text(),
+        checkindate: carRow.find("td:eq(1)").text(),
+        checkoutdate: carRow.find("td:eq(2)").text(),
+        price: carRow.find("td:eq(3)").text(),
+      };
+      selectedCars.push(carInfo);
+    });
+
+    var oldData = JSON.parse(localStorage.getItem('carItems')) || [];
+    var prevSize = oldData.length
+    oldData.push.apply(oldData, selectedCars);
+    localStorage.setItem("carItems", JSON.stringify(oldData));
+    if(prevSize!=oldData.length){
+        showPopup("Cars have been added to the cart!", 5000);
+    }
+  
+  });
+  });
+
+  document.addEventListener("DOMContentLoaded", function() {
+
+setNavHeight()
+
+window.addEventListener("load", setNavHeight);
+window.addEventListener("resize", setNavHeight);
+});
+</script>
+<html lang="en">
+<head>
+<title>Book My Flights</title>
+<link rel="stylesheet" href="mystyle.css">
+</head>
+<body>
+
+<header>
+  <h1>BookMyFlights.com</h1>
+</header>
+
+<ul>
+    <li><a href="mainpage.html">Home</a></li>
+    <li><a href="flights.html">Flights</a></li>
+    <li><a href="hotels.html">Hotels</a></li>
+    <li><a href="rentalcarsbook.html"  style="background-color: #111111; color:  white;">Cars</a></li>
+    <li><a href="orderstatus.html">Order Status</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="specialoffer.html" >Special Offer</a></li>
+    <li><a href="mycart.html" >My Cart</a></li>
+    <p id = "current-time"></p>
+</ul>
+
+<section>
+  <nav>
+    <h4> New <em>offers</em> available</h4>
+    <ol>
+        <li>
+            10% Cashback on $200 min flight booking
+        </li>
+        <li> 15% discount on hotel room booking</li>
+        <li> Free Cab from airport to hotel room upto 20 miles</li>
+    </ol>
+  </nav>
+  
+  <article>
+    <h2 id="carPageTitle">Car Rental Search</h2>
+    <div id = "carInfo" style = "display: block;">
+      <div>
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city" placeholder="Enter city name" required>
+      </div><br>
+      <div>
+        <label for="checkin">Check-in Date:</label>
+        <input type="date" id="checkin" name="checkin" required>
+      </div><br>
+      <div>
+        <label for="checkout">Check-out Date:</label>
+        <input type="date" id="checkout" name="checkout" required>
+      </div><br>
+      <button class = "favorite styled" onclick="showCarRentalForm()">Search</button>
+    </div>
+
+    <h2 id="carConfirmation"></h2>
+
+    <input type="image" id = "cartIcon" src="addToCart.png" alt="Add to Cart" style="width: 50px; height: 50px; float: right">
+    <div id="popup" class="popup">
+        <span id="popupMessage"></span>
+    </div><br>
+    <table id="carTable" border="1px solid black">
+      <thead>
+        <tr>
+          <th>City</th>
+          <th>Check-in Date</th>
+          <th>Check-out Date</th>
+          <th>Price</th>
+          <th>Choose Car</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+    <br>
+  </article>
+</section>
+
+<footer>
+  <p>Copyright <strong>2033  by UTD</strong>. All Rights Reserved.</p>
+  <p> Shalini Gautam (sxg220033)</p>
+</footer>
+<div >
+  <p class="myPara"> Terms and Conditions</p>
+  </div>
+
+</body>
+</html>
+

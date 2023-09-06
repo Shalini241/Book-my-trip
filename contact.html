@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src = "myjavascript.js"></script>
+<script>
+    $(document).ready(function() {
+      let time = document.getElementById("current-time");
+      setInterval(()=>{
+        let d = new Date();
+        time.innerHTML = d.toLocaleDateString('en-us') + " "+ d.toLocaleTimeString('en-us');
+      },1000)
+
+      var changedColor = localStorage.getItem("bgcolor");
+      var article = document.getElementsByTagName('article');
+      article[0].style.backgroundColor = changedColor;
+    });
+  </script>
+<html lang="en">
+<head>
+<title>Book My Flights</title>
+<link rel="stylesheet" href="mystyle.css">
+</head>
+<body>
+
+<header>
+  <h1>BookMyFlights.com</h1>
+</header>
+
+<ul>
+    <li><a href="mainpage.html">Home</a></li>
+    <li><a href="flights.html">Flights</a></li>
+    <li><a href="hotels.html">Hotels</a></li>
+    <li><a href="rentalcarsbook.html">Cars</a></li>
+    <li><a href="orderstatus.html">Order Status</a></li>
+    <li><a href="contact.html" style="background-color: #111111; color:  white;">Contact</a></li>
+    <li><a href="specialoffer.html" >Special Offer</a></li>
+    <li><a href="mycart.html" >My Cart</a></li>
+    <p id = "current-time"></p>
+</ul>
+
+<section>
+  <nav>
+    <h4> New <em>offers</em> available</h4>
+    <ol>
+        <li>
+            10% Cashback on $200 min flight booking
+        </li>
+        <li> 15% discount on hotel room booking</li>
+        <li> Free Cab from airport to hotel room upto 20 miles</li>
+    </ol>
+  </nav>
+  
+  <article>
+    <h4> For any further queries? Reach out to us by submitting this form.</h4>
+    <form onsubmit="return validateForm()">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" required>
+    
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" required><br><br>
+    
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="phoneNum ">Phone Number:</label>
+        <input type="phoneNum" id="phoneNum" name="phoneNum" placeholder= "(123) 456-7890" required><br><br>
+    
+        <label>Gender:</label>
+        <input type="radio" id="male" name="gender" value="male" required>
+        <label for="male">Male</label>
+        <input type="radio" id="female" name="gender" value="female" required>
+        <label for="female">Female</label><br><br>
+        
+        <label for="comment">Comments:</label>
+        <textarea id="comment" name="comment" placeholder="Enter your comment" required></textarea><br><br>
+    
+        <button class = "favorite styled" type="submit">Submit</button>
+      </form>
+      <br>
+
+      <button class = "favorite styled" id="convertToJson" onclick="convertToJSON()">Convert to JSON</button>
+      <h3 id="convertedJson"></h3> 
+  </article>
+</section>
+
+<footer>
+    <p>Copyright <strong>2033  by UTD</strong>. All Rights Reserved.</p>
+    <p> Shalini Gautam (sxg220033)</p>
+</footer>
+<div >
+    <p class="myPara"> Terms and Conditions</p>
+</div>
+
+</body>
+</html>
+

@@ -1,0 +1,238 @@
+* {
+  box-sizing: border-box;
+}
+
+h4 {
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Style the header */
+header {
+  background-color: #5AB9EA;
+  padding: 30px;
+  text-align: center;
+  font-size: 35px;
+  color: rgb(22, 22, 22);
+}
+
+/* Create two columns/boxes that floats next to each other */
+nav {
+  float: left;
+  width: 25%;
+  background: #84CEEB;
+  opacity: 0.8;
+  padding: 10px;
+  min-height: 500px;
+}
+
+/* Style the list inside the menu */
+nav ol {
+  list-style-type: circle;
+  padding: 14px;
+}
+
+article {
+  float: left;
+  padding: 20px;
+  width: 75%;
+  background-color: #C1C8E4;
+  min-height: 500px; /* only for demonstration, should be removed */
+  opacity: 0.9;
+}
+
+/* Clear floats after the columns */
+section::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Style the footer */
+footer {
+  background-color: #8860D0;
+  padding: 1px;
+  text-align: center;
+  font-size: small;
+  color: rgb(221, 221, 221);
+  bottom: 0;
+  position: fixed;
+  width: 100%;
+}
+
+.myPara {
+    visibility: hidden;
+}
+
+body {
+    text-align: left;
+    background-image: url('https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg?w=1800&t=st=1686183837~exp=1686184437~hmac=31eacbbd7fe0625046976fe3c2dbb11760cfe6d0bbdee722303671cb57130fcd');
+    background-repeat: repeat;
+  }
+  
+  h1 {
+    text-shadow: 2px 2px 4px #000000;
+    line-height: 1.5;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    padding: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    opacity: 0.8;
+    position: relative;
+  }
+
+  h2 {
+    text-shadow: 2px 2px #29696c;
+  }
+  
+  span {
+    font-weight: 600;
+    padding: 5px;
+    margin: 10px;
+    opacity: 0.5;
+  } 
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0px;
+    overflow: hidden;
+    background-color: #5680E9;
+    opacity: 0.9;
+  }
+
+  ol {
+    font-size: small;
+  }
+  
+  li {
+    float: left;
+    padding: 4px;
+  }
+  
+  li a {
+    display: block;
+    color:  rgb(0, 0, 0);
+    text-align: center;
+    padding-left: 22px;
+    padding-right: 22px;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    text-decoration: none;
+  }
+  
+  /* Change the link color to #111 (black) on hover */
+  li a:hover {
+    background-color: #111111;
+    color:  rgb(255, 255, 255);
+  }
+
+  table {
+    border:1px solid black;
+    border-style: dotted;
+    border-color: #8860D0;
+    border-width: 2px;
+    width: fit-content;
+  }
+
+  th {
+    text-align: center;
+    vertical-align: middle;
+    padding: 8px 8px;
+  }
+
+  td {
+    vertical-align: middle;
+    padding: 8px 8px;
+  }
+
+  td a:link {
+    color: green;
+  }
+  
+  /* visited link */
+  td a:visited {
+    color: purple;
+  }
+  
+  /* mouse over link */
+  td a:hover {
+    color: red;
+  }
+  
+  /* selected link */
+  td a:active {
+    color: yellow;
+  }
+
+  .styled {
+    border: 0;
+    line-height: 2.5;
+    padding: 0 20px;
+    font-size: 1rem;
+    text-align: center;
+    color: #fff;
+    text-shadow: 1px 1px 1px #000;
+    border-radius: 10px;
+    background-color: rgba(220, 0, 0, 1);
+    background-image: linear-gradient(to top left, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) 30%, rgba(0, 0, 0, 0));
+    box-shadow: inset 2px 2px 3px rgba(255, 255, 255, 0.6), inset -2px -2px 3px rgba(0, 0, 0, 0.6);
+}
+
+.styled:hover {
+    background-color: rgba(255, 0, 0, 1);
+}
+
+.styled:active {
+    box-shadow: inset -2px -2px 3px rgba(255, 255, 255, 0.6), inset 2px 2px 3px rgba(0, 0, 0, 0.6);
+}
+
+dt {
+    font-weight: bold;
+    font-style: italic;
+}
+#current-time {
+  font-size: larger;
+  color: white;
+  font-weight: 800;
+  text-align: right;
+  float: right;
+  margin-right: 20px;
+}
+.hotel-form {
+  display: none;
+}
+
+.hotel-options {
+  margin-top: 20px;
+}
+
+.hotel-option {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.hotel-option input[type="radio"] {
+  margin-right: 5px;
+}
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.passenger {
+  height: 50px;
+  width: 50px;
+  float: right;
+}

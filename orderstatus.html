@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src = "myjavascript.js"></script>
+<script>
+  $(document).ready(function() {
+    let time = document.getElementById("current-time");
+    setInterval(()=>{
+      let d = new Date();
+      time.innerHTML = d.toLocaleDateString('en-us') + " "+ d.toLocaleTimeString('en-us');
+    },1000)
+
+    var changedColor = localStorage.getItem("bgcolor");
+      var article = document.getElementsByTagName('article');
+      article[0].style.backgroundColor = changedColor;
+
+    const hotelRadio = document.getElementById('hotel');
+    const hotelTable = document.getElementById('hotelTable');
+
+    const flightRadio = document.getElementById('flight');
+    const flightTable = document.getElementById('flightTable');
+
+    const carRadio = document.getElementById('car');
+    const carTable = document.getElementById('carTable');
+
+    carRadio.addEventListener('change', () => {
+      hotelTable.style.display = 'none';
+      flightTable.style.display = 'none';
+      var bookingData = localStorage.getItem("carData");
+      var table = document.getElementById("carTable");
+      var parsedBookingData = JSON.parse(bookingData);
+
+      if(parsedBookingData == null || parsedBookingData.length == 0){
+        table.style.display = 'none';
+        var nodata = document.getElementById("carNoData");
+          nodata.innerHTML = "No data to display";
+          nodata.style.display = 'block';
+        document.getElementById("hotelNoData").style.display = 'none';
+        document.getElementById("flightNoData").style.display = 'none';
+      } else {
+        carTable.style.display = 'block';
+        document.getElementById("carNoData").style.display = 'none';
+        document.getElementById("hotelNoData").style.display = 'none';
+        document.getElementById("flightNoData").style.display = 'none';
+      }
+
+    });
+
+    hotelRadio.addEventListener('change', () => {
+      carTable.style.display = 'none';
+      flightTable.style.display = 'none';
+      var bookingData = localStorage.getItem("hotelData");
+      var table = document.getElementById("hotelTable");
+      var parsedBookingData = JSON.parse(bookingData);
+
+      if(parsedBookingData == null || parsedBookingData.length == 0){
+        table.style.display = 'none';
+        var nodata = document.getElementById("hotelNoData");
+          nodata.innerHTML = "No data to display";
+          nodata.style.display = 'block';
+        document.getElementById("flightNoData").style.display = 'none';
+        document.getElementById("carNoData").style.display = 'none';
+      } else {
+        hotelTable.style.display = 'block';
+        document.getElementById("hotelNoData").style.display = 'none';
+        document.getElementById("flightNoData").style.display = 'none';
+        document.getElementById("carNoData").style.display = 'none';
+      }
+
+    });
+
+    flightRadio.addEventListener('change', () => {
+      carTable.style.display = 'none';
+      hotelTable.style.display = 'none';
+
+      var bookingData = localStorage.getItem("flightData");
+      var table = document.getElementById("flightTable");
+      var parsedBookingData = JSON.parse(bookingData);
+
+      if(parsedBookingData == null || parsedBookingData.length == 0){
+        table.style.display = 'none';
+        var nodata = document.getElementById("flightNoData");
+          nodata.innerHTML = "No data to display";
+        nodata.style.display = 'block';
+        document.getElementById("hotelNoData").style.display = 'none';
+        document.getElementById("carNoData").style.display = 'none';
+      } else {
+        flightTable.style.display = 'block';
+        document.getElementById("flightNoData").style.display = 'none';
+        document.getElementById("hotelNoData").style.display = 'none';
+        document.getElementById("carNoData").style.display = 'none';
+      }
+
+    });
+
+    showCarData();
+    showHotelData();
+    showFlightData();
+
+    document.addEventListener("DOMContentLoaded", function() {
+
+setNavHeight()
+
+window.addEventListener("load", setNavHeight);
+window.addEventListener("resize", setNavHeight);
+});
+
+  });
+</script>
+<html lang="en">
+<head>
+<title>Book My Flights</title>
+<link rel="stylesheet" href="mystyle.css">
+</head>
+<body>
+
+<header>
+  <h1>BookMyFlights.com</h1>
+</header>
+
+<ul>
+    <li><a href="mainpage.html">Home</a></li>
+    <li><a href="flights.html">Flights</a></li>
+    <li><a href="hotels.html">Hotels</a></li>
+    <li><a href="rentalcarsbook.html">Cars</a></li>
+    <li><a href="orderstatus.html"  style="background-color: #111111; color:  white;">Order Status</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="specialoffer.html" >Special Offer</a></li>
+    <li><a href="mycart.html" >My Cart</a></li>
+    <p id = "current-time"></p>
+</ul>
+
+<section>
+  <nav>
+    <h4> New <em>offers</em> available</h4>
+    <ol>
+        <li>
+            10% Cashback on $200 min flight booking
+        </li>
+        <li> 15% discount on hotel room booking</li>
+        <li> Free Cab from airport to hotel room upto 20 miles</li>
+    </ol>
+  </nav>
+  
+  <article>
+
+    <div>
+      <label for="fontSize">Font Size:</label>
+      <select id="fontSize" onchange="changeFontSize()">
+        <option value="small">Small</option>
+        <option value="medium" selected>Medium</option>
+        <option value="large">Large</option>
+      </select>
+    </div><br>
+
+    <div id="orderPage" style="font-size: medium;">
+
+    <input type="radio" id="hotel" name="orderstatus" value="hotel" required>
+      <label for="hotel"> Hotel </label>
+        <input type="radio" id="car" name="orderstatus" value="car" required>
+        <label for="car"> Car </label>
+        <input type="radio" id="flight" name="orderstatus" value="flight" required>
+        <label for="flight"> Flight </label><br>
+
+    <table id="hotelTable" border="1px solid black" style="display: none;">
+      <tr>
+          <th> Order Id </th>
+          <th> Hotel Name</th>
+          <th> City </th>
+          <th> Check-in Date</th>
+          <th> Check-out Date</th>
+          <th> Status</th>
+      </tr>
+      <h3 id = "hotelNoData"></h3>
+  </table>
+
+  <table id="carTable" border="1px solid black" style="display: none;">
+    <tr>
+        <th> Order Id </th>
+        <th> Car Name </th>
+        <th> City </th>
+        <th> Check-in Date</th>
+        <th> Check-out Date</th>
+        <th> Status</th>
+    </tr>
+    <h3 id = "carNoData"></h3>
+</table>
+
+<table id="flightTable" border="1px solid black" style="display: none;">
+  <tr>
+      <th> Order Id </th>
+      <th> Flight Type </th>
+      <th> Flight Name </th>
+      <th> Origin </th>
+      <th> Destination </th>
+      <th> Departure 1 </th>
+      <th> Arrival 1 </th>
+      <th> Departure 2 </th>
+      <th> Arrival 2 </th>
+      <th> Status</th>
+  </tr>
+  <h3 id = "flightNoData"></h3>
+</table>
+</div>
+  </article>
+</section>
+
+<footer>
+ 
+  <p>Copyright <strong>2033  by UTD</strong>. All Rights Reserved.</p>
+  <p> Shalini Gautam (sxg220033)</p>
+ 
+</footer>
+<div >
+<p class="myPara"> Terms and Conditions</p>
+</div>
+
+</body>
+</html>
+

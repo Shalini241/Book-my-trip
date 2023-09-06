@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src = "myjavascript.js"></script>
+<script>
+  $(document).ready(function() {
+  // XML string with flight information
+  let time = document.getElementById("current-time");
+    setInterval(()=>{
+      let d = new Date();
+      time.innerHTML = d.toLocaleDateString('en-us') + " "+ d.toLocaleTimeString('en-us');
+    },1000);
+
+    var changedColor = localStorage.getItem("bgcolor");
+      var article = document.getElementsByTagName('article');
+      article[0].style.backgroundColor = changedColor;
+
+    const onewayRadio = document.getElementById('oneway');
+
+    const roundtripRadio = document.getElementById('roundtrip');
+    const roundtripform = document.getElementById('roundtripForm');
+
+    const searchButton = document.getElementById('searchFlight');
+
+    var isOneway = true;
+
+    roundtripRadio.addEventListener('change', () => {
+      roundtripform.style.display = 'block';
+      isOneway = false;
+    });
+
+    onewayRadio.addEventListener('change', () => {
+      roundtripform.style.display = 'none';
+    });
+
+    searchButton.addEventListener("click", function() {
+        if(showFlightForm(isOneway)){
+          searchButton.style.display='none';
+
+        var origin = document.getElementById("origin").value;
+        var destination = document.getElementById("destination").value;
+        var departure = document.getElementById("departure").value;
+        var arrival = document.getElementById("arrival").value;
+
+        const rows = $("#flightTable tr:not(:first)");
+
+        // Loop through each row and update the values
+        rows.each(function(index) {
+            const row = $(this);
+            row.find("td:eq(0)").text(origin);
+            row.find("td:eq(1)").text(destination);
+            row.find("td:eq(2)").text(departure);
+            row.find("td:eq(4)").text(arrival);
+
+        });
+    }
+      });
+
+  var xmlString = `
+    <flights>
+      <flight>
+        <origin>New York</origin>
+        <destination>Los Angeles</destination>
+        <departureDate>2023-07-16</departureDate>
+        <departureTime>10:00 AM</departureTime>
+        <arrivalDate>2023-07-16</arrivalDate>
+        <arrivalTime>1:00 PM</arrivalTime>
+        <price>$200</price>
+      </flight>
+      <flight>
+        <origin>London</origin>
+        <destination>Paris</destination>
+        <departureDate>2023-07-17</departureDate>
+        <departureTime>2:00 PM</departureTime>
+        <arrivalDate>2023-07-17</arrivalDate>
+        <arrivalTime>4:00 PM</arrivalTime>
+        <price>$150</price>
+      </flight>
+      <flight>
+        <origin>Dallas</origin>
+        <destination>Paris</destination>
+        <departureDate>2023-07-12</departureDate>
+        <departureTime>2:00 PM</departureTime>
+        <arrivalDate>2023-07-17</arrivalDate>
+        <arrivalTime>4:00 PM</arrivalTime>
+        <price>$650</price>
+      </flight>
+      <flight>
+        <origin>Seattle</origin>
+        <destination>India</destination>
+        <departureDate>2023-08-12</departureDate>
+        <departureTime>2:00 PM</departureTime>
+        <arrivalDate>2023-07-17</arrivalDate>
+        <arrivalTime>4:00 PM</arrivalTime>
+        <price>$1650</price>
+      </flight>
+      <flight>
+        <origin>Dallas</origin>
+        <destination>Salt Lake City</destination>
+        <departureDate>2023-07-12</departureDate>
+        <departureTime>2:00 PM</departureTime>
+        <arrivalDate>2023-07-17</arrivalDate>
+        <arrivalTime>4:00 PM</arrivalTime>
+        <price>$200</price>
+      </flight>
+      <flight>
+        <origin>Austin</origin>
+        <destination>Michigan</destination>
+        <departureDate>2023-07-12</departureDate>
+        <departureTime>2:00 PM</departureTime>
+        <arrivalDate>2023-07-17</arrivalDate>
+        <arrivalTime>4:00 PM</arrivalTime>
+        <price>$450</price>
+      </flight>
+      <flight>
+        <origin>Chichago</origin>
+        <destination>New York</destination>
+        <departureDate>2023-07-12</departureDate>
+        <departureTime>2:00 PM</departureTime>
+        <arrivalDate>2023-07-17</arrivalDate>
+        <arrivalTime>4:00 PM</arrivalTime>
+        <price>$690</price>
+      </flight>
+      <flight>
+        <origin>Dallas</origin>
+        <destination>Inda</destination>
+        <departureDate>2023-07-12</departureDate>
+        <departureTime>2:00 PM</departureTime>
+        <arrivalDate>2023-07-17</arrivalDate>
+        <arrivalTime>4:00 PM</arrivalTime>
+        <price>$1350</price>
+      </flight>
+      <flight>
+        <origin>Houston</origin>
+        <destination>San Jose</destination>
+        <departureDate>2023-07-12</departureDate>
+        <departureTime>2:00 PM</departureTime>
+        <arrivalDate>2023-07-17</arrivalDate>
+        <arrivalTime>4:00 PM</arrivalTime>
+        <price>$450</price>
+      </flight>
+      <flight>
+        <origin>Raleigh</origin>
+        <destination>Dallas</destination>
+        <departureDate>2023-07-12</departureDate>
+        <departureTime>2:00 PM</departureTime>
+        <arrivalDate>2023-07-17</arrivalDate>
+        <arrivalTime>4:00 PM</arrivalTime>
+        <price>$150</price>
+      </flight>
+    </flights>
+  `;
+
+  // Parse XML string into DOM object
+  var parser = new DOMParser();
+  var xmlDoc = parser.parseFromString(xmlString, "text/xml");
+
+  // Get flight nodes from XML DOM
+  var flights = xmlDoc.getElementsByTagName("flight");
+
+  // Loop through flight nodes and add them to the table
+  for (var i = 0; i < flights.length; i++) {
+    var flight = flights[i];
+    var origin = flight.getElementsByTagName("origin")[0].textContent;
+    var destination = flight.getElementsByTagName("destination")[0].textContent;
+    var departureDate = flight.getElementsByTagName("departureDate")[0].textContent;
+    var departureTime = flight.getElementsByTagName("departureTime")[0].textContent;
+    var arrivalDate = flight.getElementsByTagName("arrivalDate")[0].textContent;
+    var arrivalTime = flight.getElementsByTagName("arrivalTime")[0].textContent;
+    var price = flight.getElementsByTagName("price")[0].textContent;
+
+    var row = "<tr>";
+    row += "<td>" + origin + "</td>";
+    row += "<td>" + destination + "</td>";
+    row += "<td>" + departureDate + "</td>";
+    row += "<td>" + departureTime + "</td>";
+    row += "<td>" + arrivalDate + "</td>";
+    row += "<td>" + arrivalTime + "</td>";
+    row += "<td>" + price + "</td>";
+    row += '<td><input type="checkbox" class="flightCheckbox"></td>';
+    row += "</tr>";
+
+    $("#flightTable tbody").append(row);
+  }
+
+  $(".flightCheckbox").on("change", function() {
+    var isChecked = $(this).is(":checked");
+
+    if (isChecked) {
+      $(this).closest("tr").css("opacity", "0.5");
+    } else {
+      $(this).closest("tr").css("opacity", "1");
+    }
+  });
+
+  $("#cartIcon").on("click", function() {
+    var selectedFlights = [];
+
+    $(".flightCheckbox:checked").each(function() {
+      var flightRow = $(this).closest("tr");
+      var flightInfo = {
+        origin: flightRow.find("td:eq(0)").text(),
+        destination: flightRow.find("td:eq(1)").text(),
+        departureDate: flightRow.find("td:eq(2)").text(),
+        departureTime: flightRow.find("td:eq(3)").text(),
+        arrivalDate: flightRow.find("td:eq(4)").text(),
+        arrivalTime: flightRow.find("td:eq(5)").text(),
+        price: flightRow.find("td:eq(6)").text(),
+      };
+      selectedFlights.push(flightInfo);
+    });
+
+    var oldData = JSON.parse(localStorage.getItem('flightItems')) || [];
+    var prevSize = oldData.length
+    oldData.push.apply(oldData, selectedFlights);
+    localStorage.setItem("flightItems", JSON.stringify(oldData));
+    if(prevSize!=oldData.length){
+        showPopup("Flights has been added to the cart!", 5000);
+    }
+  
+  });
+
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    setNavHeight()
+
+    window.addEventListener("load", setNavHeight);
+    window.addEventListener("resize", setNavHeight);
+});
+
+
+</script>
+<html lang="en">
+<head>
+<title>Book My Flights</title>
+<link rel="stylesheet" href="mystyle.css">
+</head>
+<body>
+
+<header>
+  <h1>BookMyFlights.com</h1>
+</header>
+
+<ul>
+    <li><a href="mainpage.html">Home</a></li>
+    <li><a href="flights.html" style="background-color: #111111; color:  white;">Flights</a></li>
+    <li><a href="hotels.html">Hotels</a></li>
+    <li><a href="rentalcarsbook.html">Cars</a></li>
+    <li><a href="orderstatus.html">Order Status</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="specialoffer.html" >Special Offer</a></li>
+    <li><a href="mycart.html" >My Cart</a></li>
+    <p id = "current-time"></p>
+</ul>
+
+<section>
+  <nav>
+    <h4> New <em>offers</em> available</h4>
+    <ol>
+        <li>
+            10% Cashback on $200 min flight booking
+        </li>
+        <li> 15% discount on hotel room booking</li>
+        <li> Free Cab from airport to hotel room upto 20 miles</li>
+    </ol>
+  </nav>
+  
+  <article>
+
+    <div id = 'flightPageTitle'>
+        <input type="radio" id="oneway" name="triptype" value="oneway" checked>
+        <label for="oneway">One Way</label>
+        <input type="radio" id="roundtrip" name="triptype" value="roundtrip" required>
+        <label for="roundtrip">Round Trip</label>
+        <input class = "passenger" type="image" src="passenger.png" alt="Button Image" name="imageButton" onclick="showPassengerForm()" />
+
+        <br><br>
+        <div id = "flightInfo">
+        <form id="flightForm">
+          <div>
+            <label for="origin">Origin:</label>
+            <input type="text" id="origin" name="origin" placeholder="Enter Origin name" required>
+          </div><br>
+          <div>
+            <label for="destination">Destination:</label>
+            <input type="text" id="destination" name="destination" placeholder="Enter Destination name" required>
+          </div><br>
+          <div>
+            <label for="departure">Departure Date:</label>
+            <input type="date" id="departure" name="departure" required>
+          </div><br> 
+          <div>
+            <label for="arrival">Arrival Date:</label>
+            <input type="date" id="arrival" name="arrival" required>
+          </div><br>
+
+          <div id="roundtripForm" style="display: none;">
+            <div>
+              <label for="departure">Departure Date for trip 2:</label>
+              <input type="date" id="departure2" name="departure2" required>
+            </div><br>
+            <div>
+              <label for="arrival">Arrival Date for Trip 2:</label>
+              <input type="date" id="arrival2" name="arrival2" required>
+            </div><br>
+          </div>
+        </form>
+
+        <button class = "favorite styled" id="searchFlight" type="submit">Search</button>
+      </div>
+
+      </div>
+
+     <h2 id="flightConfirmation"></h2>
+
+    <input type="image" id = "cartIcon" src="addToCart.png" alt="Add to Cart" style="width: 50px; height: 50px; float: right">
+    <div id="popup" class="popup">
+        <span id="popupMessage"></span>
+    </div><br>
+    <table id="flightTable" border="1px solid black">
+      <thead>
+        <tr>
+          <th>Origin</th>
+          <th>Destination</th>
+          <th>Departure Date</th>
+          <th>Departure Time</th>
+          <th>Arrival Date</th>
+          <th>Arrival Time</th>
+          <th>Price</th>
+          <th>Choose Flight</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+    <br>
+
+  </article>
+</section>
+
+<footer>
+    <p>Copyright <strong>2033  by UTD</strong>. All Rights Reserved.</p>
+    <p> Shalini Gautam (sxg220033)</p>
+</footer>
+<div >
+    <p class="myPara"> Terms and Conditions</p>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src = "myjavascript.js"></script>
+<script>
+  $(document).ready(function() {
+    let time = document.getElementById("current-time");
+    setInterval(()=>{
+      var d = new Date();
+      time.innerHTML = d.toLocaleDateString('en-us') + " "+ d.toLocaleTimeString('en-us');
+    },1000)
+
+    var changedColor = localStorage.getItem("bgcolor");
+      var article = document.getElementsByTagName('article');
+      article[0].style.backgroundColor = changedColor;
+
+    var formStartTime = new Date();
+
+    var button = document.getElementById("submitBtn");
+
+    button.addEventListener("click", function() {
+        var formEndTime = new Date();
+        var timeDiff = formEndTime.getTime() - formStartTime.getTime();
+
+        var minutesDiff = timeDiff / (1000 * 60);
+        var secDiff = (timeDiff/1000) % 60;
+        submitForm(minutesDiff, secDiff);
+
+      });
+  });
+
+  document.addEventListener("DOMContentLoaded", function() {
+
+setNavHeight()
+
+window.addEventListener("load", setNavHeight);
+window.addEventListener("resize", setNavHeight);
+});
+</script>
+<html lang="en">
+<head>
+<title>Book My Flights</title>
+<link rel="stylesheet" href="mystyle.css">
+</head>
+<body>
+
+<header>
+  <h1>BookMyFlights.com</h1>
+</header>
+
+<ul>
+    <li><a href="mainpage.html">Home</a></li>
+    <li><a href="flights.html">Flights</a></li>
+    <li><a href="hotels.html">Hotels</a></li>
+    <li><a href="rentalcarsbook.html">Cars</a></li>
+    <li><a href="orderstatus.html">Order Status</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="specialoffer.html" style="background-color: #111111; color:  white;">Special Offer</a></li>
+    <li><a href="mycart.html" >My Cart</a></li>
+    <p id = "current-time"></p>
+</ul>
+
+<section>
+  <nav>
+    <h4> New <em>offers</em> available</h4>
+    <ol>
+        <li>
+            10% Cashback on $200 min flight booking
+        </li>
+        <li> 15% discount on hotel room booking</li>
+        <li> Free Cab from airport to hotel room upto 20 miles</li>
+    </ol>
+  </nav>
+  
+  <article>
+    <div id="question1" class="question" style="display: block;">
+        <h3>Have you flown on at least 10 flights in the past year?</h3>
+        <input type="radio" id="yes" name="maxflown" value="yes" required>
+        <label for="yes">Yes</label>
+        <input type="radio" id="no" name="maxflown" value="no" required>
+        <label for="no">No</label><br><br>
+        <button id = "nextbtn" class = "favorite styled" onclick="nextQuestion(2)" style="float: right;">Next / Skip</button>
+    </div>
+    <div id="question2" class="question" style="display: none;">
+        <h3>Are you a senior flyer?</h3>
+        <input type="radio" id="yes" name="senior" value="yes" required>
+        <label for="yes">Yes</label>
+        <input type="radio" id="no" name="senior" value="no" required>
+        <label for="no">No</label><br><br>
+        <button class = "favorite styled" onclick="prevQuestion(1)">Back</button>
+        <button id = "nextbtn" class = "favorite styled" onclick="nextQuestion(3)" style="float: right;">Next / Skip</button>
+    </div>
+
+    <div id="question3" class="question" style="display: none;">
+        <h3>Are you a person with disability?</h3>
+        <input type="radio" id="yes" name="disability" value="yes" required>
+        <label for="yes">Yes</label>
+        <input type="radio" id="no" name="disability" value="no" required>
+        <label for="no">No</label><br><br>
+        <button class = "favorite styled" onclick="prevQuestion(2)">Back</button>
+        <button id = "submitBtn" class = "favorite styled" style="float: right;">Submit</button>
+    </div>
+
+    <h3 id="timeTaken"></h3>
+    <div>
+      <ol id = "offerList">
+      </ol>
+    </div>
+  </article>
+</section>
+
+<footer>
+  <p>Copyright <strong>2033  by UTD</strong>. All Rights Reserved.</p>
+  <p> Shalini Gautam (sxg220033)</p>
+</footer>
+<div >
+  <p class="myPara"> Terms and Conditions</p>
+  </div>
+
+</body>
+</html>
+
